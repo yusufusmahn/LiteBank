@@ -4,6 +4,7 @@ import dev.litebank.dto.TransactionStatus;
 import dev.litebank.dto.TransactionType;
 import dev.litebank.dto.requests.CreateTransactionRequest;
 import dev.litebank.dto.requests.DepositRequest;
+import dev.litebank.dto.responses.CreateTransactionResponse;
 import dev.litebank.dto.responses.DepositResponse;
 import dev.litebank.dto.responses.TransactionResponse;
 import dev.litebank.model.Account;
@@ -23,21 +24,30 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public DepositResponse deposit(DepositRequest depositRequest) {
-        Account foundAccount = accountRepository.findByAccountNumber(depositRequest.getAccountNumber())
-                                                .orElseThrow(() -> new AccountNotFoundException("Account not found"));
+       accountRepository.findByAccountNumber(depositRequest.getAccountNumber())
+                        .orElseThrow(() -> new AccountNotFoundException("account not found"));
 
         //TODO: create transaction record
-        CreateTransactionRequest createTransactionRequest = new CreateTransactionRequest();
-        createTransactionRequest.setAmount(depositRequest.getAmount());
-        createTransactionRequest.setAccountNumber(depositRequest.getAccountNumber());
-        createTransactionRequest.setTransactionType(TransactionType.CREDIT);
+        CreateTransactionRequest createTransactionRequest = getCreateTransactionRequest(depositRequest);
 
         var transactionResponse = transactionService.create(createTransactionRequest);
+        return getDepositResponse(transactionResponse);
+    }
+
+    private static DepositResponse getDepositResponse(CreateTransactionResponse transactionResponse) {
         DepositResponse depositResponse = new DepositResponse();
         depositResponse.setAmount(new BigDecimal(transactionResponse.getAmount()));
         depositResponse.setTransactionId(transactionResponse.getId());
         depositResponse.setTransactionStatus(TransactionStatus.SUCCESS);
-
         return depositResponse;
     }
+
+    private static CreateTransactionRequest getCreateTransactionRequest(DepositRequest depositRequest) {
+        CreateTransactionRequest createTransactionRequest = new CreateTransactionRequest();
+        createTransactionRequest.setAmount(depositRequest.getAmount());
+        createTransactionRequest.setAccountNumber(depositRequest.getAccountNumber());
+        createTransactionRequest.setTransactionType(TransactionType.CREDIT);
+        return createTransactionRequest;
+    }
+
 }
