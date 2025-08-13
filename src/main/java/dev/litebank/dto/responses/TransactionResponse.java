@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TransactionResponse {
+    private String id;
     private String amount;
 
 }
