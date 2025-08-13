@@ -37,10 +37,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public ViewAccountResponse viewDetailsFor(String number) {
+    public ViewAccountResponse viewDetailsFor(String accountNumber) {
+//        List<TransactionResponse> transactions = transactionService.getTransactionsFor()
         return null;
-    }
 
+    }
 
     private static DepositResponse getDepositResponse(CreateTransactionResponse transactionResponse) {
         DepositResponse depositResponse = new DepositResponse();
