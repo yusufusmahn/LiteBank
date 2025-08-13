@@ -12,9 +12,6 @@ public class LiteBankApplication {
 		SpringApplication.run(LiteBankApplication.class, args);
 	}
 
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
+
 
 }
