@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class TransactionServiceImpl implements TransactionService{
@@ -51,8 +53,15 @@ public class TransactionServiceImpl implements TransactionService{
     @Override
     public TransactionResponse getTransactionById(String id) {
         Transaction transaction = transactionRepository.findById(id).orElseThrow(()-> new RuntimeException("transaction not found"));
-        TransactionResponse transactionResponse = new TransactionResponse();
-        transactionResponse.setAmount(transaction.getAmount().toString());
-        return transactionResponse;
+//        TransactionResponse transactionResponse = new TransactionResponse();
+//        transactionResponse.setAmount(transaction.getAmount().toString());
+//        return transactionResponse;
+
+        return modelMapper.map(transaction, TransactionResponse.class);
+    }
+
+    @Override
+    public List<TransactionResponse> getTransactionsFor() {
+        return List.of();
     }
 }
