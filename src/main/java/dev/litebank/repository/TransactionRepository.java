@@ -10,7 +10,10 @@ import org.springframework.data.jpa.repository.Query;
 public interface TransactionRepository extends JpaRepository<Transaction, String> {
 //    Page<Transaction> readTransactionsByAccountNumber(String accountNumber, Pageable pageable);
 
+    //Jakarta persistence query language
     @Query("select t from Transaction t where t.accountNumber =:accountNumber")
     Page<Transaction> retrieveTransactionsByAccountNumber(String accountNumber, Pageable pageable);
+
+
 
 }
