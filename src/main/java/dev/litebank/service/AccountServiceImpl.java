@@ -8,7 +8,6 @@ import dev.litebank.dto.responses.CreateTransactionResponse;
 import dev.litebank.dto.responses.DepositResponse;
 import dev.litebank.dto.responses.TransactionResponse;
 import dev.litebank.dto.responses.ViewAccountResponse;
-import dev.litebank.model.Account;
 import dev.litebank.repository.AccountRepository;
 import dev.litebank.exception.AccountNotFoundException;
 import lombok.AllArgsConstructor;
@@ -33,18 +32,17 @@ public class AccountServiceImpl implements AccountService {
         CreateTransactionRequest createTransactionRequest = getCreateTransactionRequest(depositRequest);
 
         var transactionResponse = transactionService.create(createTransactionRequest);
-        return getDepositResponse(transactionResponse);
+        return buildDepositResponse(transactionResponse);
     }
 
     @Override
     public ViewAccountResponse viewDetailsFor(String accountNumber) {
-//        List<TransactionResponse> transactions = transactionService.getTransactionsFor()
+        List<TransactionResponse> transactions = transactionService.getTransactionsFor(accountNumber);
         return null;
-
     }
 
-    private static DepositResponse getDepositResponse(CreateTransactionResponse transactionResponse) {
-        DepositResponse depositResponse = new DepositResponse();
+    private static DepositResponse buildDepositResponse(CreateTransactionResponse transactionResponse) {
+        var depositResponse = new DepositResponse();
         depositResponse.setAmount(new BigDecimal(transactionResponse.getAmount()));
         depositResponse.setTransactionId(transactionResponse.getId());
         depositResponse.setTransactionStatus(TransactionStatus.SUCCESS);
@@ -58,5 +56,7 @@ public class AccountServiceImpl implements AccountService {
         createTransactionRequest.setTransactionType(TransactionType.CREDIT);
         return createTransactionRequest;
     }
+
+
 
 }
