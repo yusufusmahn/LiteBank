@@ -24,7 +24,7 @@ class TransactionRepositoryTest {
     void retrieveTransactionByAccountNumber() {
         String accountNumber = "0123456789";
         Pageable pageable = PageRequest.of(0, 5);
-        Page<Transaction>  transactions = transactionRepository.getByAccountNumber(accountNumber,pageable);
+        Page<Transaction>  transactions = transactionRepository.retrieveTransactionsByAccountNumber(accountNumber,pageable);
         assertThat(transactions).isNotNull();
         assertThat(transactions.getContent().size()).isEqualTo(5);
     }
