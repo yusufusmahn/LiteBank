@@ -33,7 +33,6 @@ public class TransactionServiceImpl implements TransactionService{
 //        createTransactionResponse.setTransactionType(transaction.getTransactionType().toString());
 //        return createTransactionResponse;
 
-
         return modelMapper.map(transaction, CreateTransactionResponse.class);
 
     }
@@ -44,7 +43,6 @@ public class TransactionServiceImpl implements TransactionService{
 //        transaction.setTransactionType(transactionRequest.getTransactionType());
 //        transaction.setAccountNumber(transactionRequest.getAccountNumber());
 //        return transaction;
-
 
         return modelMapper.map(transactionRequest, Transaction.class);
 
@@ -60,8 +58,12 @@ public class TransactionServiceImpl implements TransactionService{
         return modelMapper.map(transaction, TransactionResponse.class);
     }
 
+
+
     @Override
-    public List<TransactionResponse> getTransactionsFor() {
+    public List<TransactionResponse> getTransactionsFor(String accountNumber) {
         return List.of();
     }
+
+
 }
