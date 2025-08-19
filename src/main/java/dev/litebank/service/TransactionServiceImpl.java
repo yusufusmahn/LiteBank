@@ -77,7 +77,6 @@ public class TransactionServiceImpl implements TransactionService{
         List<TransactionResponse> transactionResponses =  modelMapper.map(transactions.getContent(),listType);
         log.info("Retrieved :: {}",transactionResponses);
         return transactionResponses;
-
     }
 
 
