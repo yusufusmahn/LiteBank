@@ -18,6 +18,9 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import static dev.litebank.util.ProjectUtil.DEFAULT_PAGE_NUMBER;
+import static dev.litebank.util.ProjectUtil.DEFAULT_PAGE_SIZE;
+
 @Service
 @AllArgsConstructor
 @Slf4j
@@ -69,14 +72,11 @@ public class TransactionServiceImpl implements TransactionService{
 
 
     @Override
-    public List<TransactionResponse> getTransactionsFor(String accountNumber, int page, int size) {
-        if (page < 1)throw new RuntimeException("page must be greater than or equal to 1");
-        page = page - 1;
-        Pageable  pageable = PageRequest.of(page, size);
-        Page<Transaction> transactions = transactionRepository.retrieveTransactionsByAccountNumber(accountNumber,pageable);
+    public List<TransactionResponse> getTransactionsFor(String accountNumber) {
+        List<Transaction> transactions = transactionRepository.findTransactionByAccountNumber(accountNumber);
         Type listType = new TypeToken<List<TransactionResponse>>() {}.getType();
-        List<TransactionResponse> transactionResponses =  modelMapper.map(transactions.getContent(),listType);
-        log.info("Retrieved :: {}",transactionResponses);
+        List<TransactionResponse> transactionResponses =  modelMapper.map(transactions,listType);
+//        log.info("Retrieved :: {}",transactionResponses);
         return transactionResponses;
     }
 

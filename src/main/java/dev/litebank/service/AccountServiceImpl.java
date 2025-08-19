@@ -37,7 +37,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ViewAccountResponse viewDetailsFor(String accountNumber) {
-        List<TransactionResponse> transactions = transactionService.getTransactionsFor(accountNumber, 0, 0);
+        List<TransactionResponse> transactions =
+                transactionService.getTransactionsFor(accountNumber);
         return null;
     }
 

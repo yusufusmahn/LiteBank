@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 
 public interface TransactionRepository extends JpaRepository<Transaction, String> {
 //    Page<Transaction> readTransactionsByAccountNumber(String accountNumber, Pageable pageable);
@@ -15,5 +17,5 @@ public interface TransactionRepository extends JpaRepository<Transaction, String
     Page<Transaction> retrieveTransactionsByAccountNumber(String accountNumber, Pageable pageable);
 
 
-
+    List<Transaction> findTransactionByAccountNumber(String accountNumber);
 }

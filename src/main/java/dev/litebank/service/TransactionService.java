@@ -11,5 +11,5 @@ public interface TransactionService {
 
     TransactionResponse getTransactionById(String id);
 
-    List<TransactionResponse> getTransactionsFor(String accountNumber, int page, int size);
+    List<TransactionResponse> getTransactionsFor(String accountNumber);
 }

@@ -49,7 +49,7 @@ public class TransactionServiceTest {
     @Sql(scripts = {"/db/data.sql"})
     void testCanGetTransactionByAccountNumber(){
         List<TransactionResponse> transactions =
-                transactionService.getTransactionsFor("0123456789",1,5);
+                transactionService.getTransactionsFor("0123456789");
         assertThat(transactions).isNotNull();
         assertThat(transactions.size()).isEqualTo(5);
     }
