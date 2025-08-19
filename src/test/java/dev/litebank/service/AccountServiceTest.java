@@ -5,6 +5,7 @@ import dev.litebank.dto.requests.DepositRequest;
 import dev.litebank.dto.responses.DepositResponse;
 import dev.litebank.dto.PaymentMethod;
 import dev.litebank.dto.TransactionStatus;
+import dev.litebank.dto.responses.ViewAccountResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +13,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.math.BigDecimal;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -32,6 +34,13 @@ public class AccountServiceTest {
         assertNotNull(depositResponse);
         assertEquals(TransactionStatus.SUCCESS, depositResponse.getTransactionStatus());
 
+    }
+
+    @Test
+    void testCanViewAccount(){
+        ViewAccountResponse response = accountService.viewDetailsFor("0123456789");
+        assertThat(response).isNotNull();
+        assertThat(response.getBalance()).isEqualTo("20000");
     }
 
 }
