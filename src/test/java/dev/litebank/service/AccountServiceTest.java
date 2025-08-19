@@ -37,10 +37,12 @@ public class AccountServiceTest {
     }
 
     @Test
+    @Sql(scripts = {"/db/data.sql"})
     void testCanViewAccount(){
-        ViewAccountResponse response = accountService.viewDetailsFor("0123456789");
+        ViewAccountResponse response =
+                accountService.viewDetailsFor("0123456789");
         assertThat(response).isNotNull();
-        assertThat(response.getBalance()).isEqualTo("20000");
+        assertThat(response.getBalance()).isEqualTo(new BigDecimal("370000.00").toString());
     }
 
 }
