@@ -5,7 +5,6 @@ insert into account (id, account_number) values(
     '12345', '0123456789');
 
 
-
 insert into transaction(id, amount, account_number, transaction_type) values
         ('100',20000,'0123456789',0),
         ('101', 20000,'0123456789', 1),
