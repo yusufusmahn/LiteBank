@@ -17,14 +17,14 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class AccountServiceTest {
+@Sql(scripts = {"/db/data.sql"})
+public class  AccountServiceTest {
 
     @Autowired
     private AccountService accountService;
 
 
     @Test
-    @Sql(scripts = {"/db/data.sql"})
     void testCanDeposit(){
         DepositRequest depositRequest = new DepositRequest();
         depositRequest.setPaymentMethod(PaymentMethod.CARD);
@@ -37,7 +37,6 @@ public class AccountServiceTest {
     }
 
     @Test
-    @Sql(scripts = {"/db/data.sql"})
     void testCanViewAccount(){
         ViewAccountResponse response =
                 accountService.viewDetailsFor("0123456789");
