@@ -44,23 +44,26 @@ public class AccountServiceImpl implements AccountService {
         TransactionResponse transactionResponse = new TransactionResponse();
         transactionResponse.setAmount(ZERO.toString());
         TransactionResponse response = transactions.stream()
-                .reduce(transactionResponse,(a,b)-> {
-                            BigDecimal total = ZERO;
-                            if (b.getTransactionType() == TransactionType.DEPOSIT)
-                                total = total.add(new BigDecimal(b.getAmount()));
-
-                             else
-                                total = total.subtract(new BigDecimal(b.getAmount()));
-                             transactionResponse.setAmount(
-                                        new BigDecimal(a.getAmount())
-                                                .add(total).toString()
-                             );
-                            return transactionResponse;
-                });
+                .reduce(transactionResponse,(a,b)->
+                        computeAccountBalanceFrom(a, b, transactionResponse));
 
         ViewAccountResponse viewAccountResponse = new ViewAccountResponse();
         viewAccountResponse.setBalance(response.getAmount());
         return viewAccountResponse;
+    }
+
+    private static TransactionResponse computeAccountBalanceFrom(TransactionResponse a, TransactionResponse b, TransactionResponse transactionResponse) {
+        BigDecimal total = ZERO;
+        if (b.getTransactionType() == TransactionType.DEPOSIT)
+            total = total.add(new BigDecimal(b.getAmount()));
+
+         else
+            total = total.subtract(new BigDecimal(b.getAmount()));
+        transactionResponse.setAmount(
+                   new BigDecimal(a.getAmount())
+                           .add(total).toString()
+        );
+        return transactionResponse;
     }
 
     private static DepositResponse buildDepositResponse(CreateTransactionResponse transactionResponse) {
@@ -79,6 +82,31 @@ public class AccountServiceImpl implements AccountService {
         return createTransactionRequest;
     }
 
+
+    public ViewAccountResponse viewDetailsForAccount(String accountNumber) {
+        List<TransactionResponse> transactions =
+                transactionService.getTransactionsFor(accountNumber);
+        TransactionResponse transactionResponse = new TransactionResponse();
+        transactionResponse.setAmount(ZERO.toString());
+        TransactionResponse response = transactions.stream()
+                .reduce(transactionResponse,(a,b)-> {
+                    BigDecimal total = ZERO;
+                    if (b.getTransactionType() == TransactionType.DEPOSIT)
+                        total = total.add(new BigDecimal(b.getAmount()));
+
+                    else
+                        total = total.subtract(new BigDecimal(b.getAmount()));
+                    transactionResponse.setAmount(
+                            new BigDecimal(a.getAmount())
+                                    .add(total).toString()
+                    );
+                    return transactionResponse;
+                });
+
+        ViewAccountResponse viewAccountResponse = new ViewAccountResponse();
+        viewAccountResponse.setBalance(response.getAmount());
+        return viewAccountResponse;
+    }
 
 
 }
