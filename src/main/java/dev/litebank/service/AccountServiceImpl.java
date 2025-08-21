@@ -4,10 +4,8 @@ import dev.litebank.dto.TransactionStatus;
 import dev.litebank.dto.TransactionType;
 import dev.litebank.dto.requests.CreateTransactionRequest;
 import dev.litebank.dto.requests.DepositRequest;
-import dev.litebank.dto.responses.CreateTransactionResponse;
-import dev.litebank.dto.responses.DepositResponse;
-import dev.litebank.dto.responses.TransactionResponse;
-import dev.litebank.dto.responses.ViewAccountResponse;
+import dev.litebank.dto.requests.createAccountRequest;
+import dev.litebank.dto.responses.*;
 import dev.litebank.repository.AccountRepository;
 import dev.litebank.exception.AccountNotFoundException;
 import lombok.AllArgsConstructor;
@@ -50,6 +48,11 @@ public class AccountServiceImpl implements AccountService {
         ViewAccountResponse viewAccountResponse = new ViewAccountResponse();
         viewAccountResponse.setBalance(response.getAmount());
         return viewAccountResponse;
+    }
+
+    @Override
+    public CreateAccountResponse createAccount(createAccountRequest createAccountRequest) {
+        return null;
     }
 
     private static TransactionResponse computeAccountBalanceFrom(TransactionResponse a, TransactionResponse b, TransactionResponse transactionResponse) {
