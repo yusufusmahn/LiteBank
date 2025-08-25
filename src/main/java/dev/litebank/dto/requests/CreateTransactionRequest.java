@@ -1,7 +1,7 @@
 package dev.litebank.dto.requests;
 
 
-import dev.litebank.dto.TransactionType;
+import dev.litebank.model.TransactionType;
 import lombok.Getter;
 import lombok.Setter;
 
