@@ -1,7 +1,7 @@
 package dev.litebank.service;
 
 import dev.litebank.dto.requests.DepositRequest;
-import dev.litebank.dto.requests.createAccountRequest;
+import dev.litebank.dto.requests.CreateAccountRequest;
 import dev.litebank.dto.responses.CreateAccountResponse;
 import dev.litebank.dto.responses.DepositResponse;
 import dev.litebank.dto.responses.ViewAccountResponse;
@@ -12,5 +12,5 @@ public interface AccountService {
 
     ViewAccountResponse viewDetailsFor(String number);
 
-    CreateAccountResponse createAccount(createAccountRequest createAccountRequest);
+    CreateAccountResponse createAccount(CreateAccountRequest createAccountRequest);
 }
