@@ -1,7 +1,7 @@
 package dev.litebank.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.litebank.dto.PaymentMethod;
+import dev.litebank.model.PaymentMethod;
 import dev.litebank.dto.requests.DepositRequest;
 import org.junit.jupiter.api.Test;
 
