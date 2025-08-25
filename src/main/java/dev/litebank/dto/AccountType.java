@@ -3,6 +3,11 @@ package dev.litebank.dto;
 public enum AccountType {
     SAVINGS,
     CURRENT,
+    SALARY,
     DOMICILIARY,
-    ESTATE
+    ESTATE,
+    JOINT,
+    CORPORATE,
+    ESCROW
+
 }
