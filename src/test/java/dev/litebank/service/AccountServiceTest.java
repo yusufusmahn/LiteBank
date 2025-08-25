@@ -3,8 +3,8 @@ package dev.litebank.service;
 
 import dev.litebank.dto.requests.DepositRequest;
 import dev.litebank.dto.responses.DepositResponse;
-import dev.litebank.dto.PaymentMethod;
-import dev.litebank.dto.TransactionStatus;
+import dev.litebank.model.PaymentMethod;
+import dev.litebank.model.TransactionStatus;
 import dev.litebank.dto.responses.ViewAccountResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
