@@ -1,10 +1,13 @@
 package dev.litebank.controller;
 
 
+import dev.litebank.dto.requests.CreateAccountRequest;
 import dev.litebank.dto.requests.DepositRequest;
+import dev.litebank.dto.responses.CreateAccountResponse;
 import dev.litebank.dto.responses.DepositResponse;
 import dev.litebank.dto.responses.ErrorResponse;
 import dev.litebank.exception.AccountNotFoundException;
+import dev.litebank.exception.UsernameAlreadyTakenException;
 import dev.litebank.service.AccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,6 +32,19 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.CREATED).body(depositResponse);
 
         }catch (AccountNotFoundException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse<>(e.getMessage()));
+        }
+    }
+
+
+    @PostMapping("/create")
+    public ResponseEntity<?> createAccount(@RequestBody CreateAccountRequest request) {
+        try {
+            CreateAccountResponse response = accountService.createAccount(request);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+
+        } catch (UsernameAlreadyTakenException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ErrorResponse<>(e.getMessage()));
         }
