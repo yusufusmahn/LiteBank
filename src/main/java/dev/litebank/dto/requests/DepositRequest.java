@@ -1,6 +1,6 @@
 package dev.litebank.dto.requests;
 
-import dev.litebank.dto.PaymentMethod;
+import dev.litebank.model.PaymentMethod;
 import lombok.Getter;
 import lombok.Setter;
 
