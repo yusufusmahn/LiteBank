@@ -1,7 +1,7 @@
 package dev.litebank.dto.requests;
 
 
-import dev.litebank.dto.AccountType;
+import dev.litebank.model.AccountType;
 import lombok.Getter;
 import lombok.Setter;
 
