@@ -10,7 +10,6 @@ import java.util.List;
 
 
 public interface TransactionRepository extends JpaRepository<Transaction, String> {
-//    Page<Transaction> readTransactionsByAccountNumber(String accountNumber, Pageable pageable);
 
     //Jakarta persistence query language
     @Query("select t from Transaction t where t.accountNumber =:accountNumber")
