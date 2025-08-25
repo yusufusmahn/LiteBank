@@ -1,7 +1,7 @@
 package dev.litebank.service;
 
 
-import dev.litebank.dto.TransactionType;
+import dev.litebank.model.TransactionType;
 import dev.litebank.dto.requests.CreateTransactionRequest;
 import dev.litebank.dto.responses.CreateTransactionResponse;
 import dev.litebank.dto.responses.TransactionResponse;
@@ -54,13 +54,5 @@ public class TransactionServiceTest {
         assertThat(transactions.size()).isEqualTo(5);
     }
 
-
-
-//    @Test
-//    void testCanViewAccount(){
-//        ViewAccountResponse response = accountService.viewDetailsFor("0123456789");
-//        assertThat(response).isNotNull();
-//        assertThat();
-//    }
 
 }
