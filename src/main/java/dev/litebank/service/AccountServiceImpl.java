@@ -1,7 +1,7 @@
 package dev.litebank.service;
 
-import dev.litebank.dto.TransactionStatus;
-import dev.litebank.dto.TransactionType;
+import dev.litebank.model.TransactionStatus;
+import dev.litebank.model.TransactionType;
 import dev.litebank.dto.requests.CreateTransactionRequest;
 import dev.litebank.dto.requests.DepositRequest;
 import dev.litebank.dto.requests.CreateAccountRequest;
