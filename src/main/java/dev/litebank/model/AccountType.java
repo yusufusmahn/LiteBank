@@ -1,4 +1,4 @@
-package dev.litebank.dto;
+package dev.litebank.model;
 
 public enum AccountType {
     SAVINGS,
