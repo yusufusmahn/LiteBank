@@ -23,6 +23,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/account/create").permitAll()
                         .requestMatchers("/api/v1/account/deposit").permitAll()
+                        .requestMatchers("/api/v1/transaction/**").permitAll()
                         .anyRequest().authenticated()
                 );
 
