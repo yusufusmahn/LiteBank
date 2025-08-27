@@ -21,15 +21,28 @@ public class TransactionControllerTest {
 
     @Test
     void testGetTransactionByAccountNumber() throws Exception {
-    ObjectMapper mapper = new ObjectMapper();
-    String accountNumber = "0123456789";
-    String json = mapper.writeValueAsString(accountNumber);
-    String TransactionEndpoint = "/api/v1/transaction";
+        String accountNumber = "0123456789";
+        String TransactionEndpoint = "/api/v1/transaction/" + accountNumber;
         mockMvc.perform(MockMvcRequestBuilders.get(TransactionEndpoint)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(json))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
     }
 
+
+    /*
+    @Test
+    void testGetTransactionByAccountNumber() throws Exception {
+//    ObjectMapper mapper = new ObjectMapper();
+    String accountNumber = "0123456789";
+//    String json = mapper.writeValueAsString(accountNumber);
+    String TransactionEndpoint = "/api/v1/transaction" + accountNumber;
+        mockMvc.perform(MockMvcRequestBuilders.get(TransactionEndpoint)
+                        .contentType(MediaType.APPLICATION_JSON))
+//                        .content(json))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+     */
 }
