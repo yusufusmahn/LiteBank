@@ -34,5 +34,5 @@ build/
 application.properties
 application-dev.properties
 secret.properties
-#data.sql
+data.sql
 .env
