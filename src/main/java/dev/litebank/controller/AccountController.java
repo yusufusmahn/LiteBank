@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/api/v1/account")
 @AllArgsConstructor
@@ -31,7 +33,8 @@ public class AccountController {
             DepositResponse depositResponse = accountService.deposit(depositRequest);
             return ResponseEntity.status(HttpStatus.CREATED).body(depositResponse);
 
-        }catch (AccountNotFoundException e){
+        }catch (AccountNotFoundException | IOException e){
+//            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ErrorResponse<>(e.getMessage()));
         }
