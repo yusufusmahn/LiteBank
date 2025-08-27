@@ -1,5 +1,6 @@
 package dev.litebank.service;
 
+import dev.litebank.dto.requests.EmailNotificationRequest;
 import dev.litebank.model.TransactionStatus;
 import dev.litebank.model.TransactionType;
 import dev.litebank.dto.requests.CreateTransactionRequest;
@@ -14,7 +15,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -29,18 +32,26 @@ public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
     private final TransactionService transactionService;
     private final PasswordEncoder passwordEncoder;
+    private final NotificationService notificationService;
 
 
     @Override
-    public DepositResponse deposit(DepositRequest depositRequest) {
-       accountRepository.findByAccountNumber(depositRequest.getAccountNumber())
+    public DepositResponse deposit(DepositRequest depositRequest) throws IOException {
+       Account account = accountRepository.findByAccountNumber(depositRequest.getAccountNumber())
                         .orElseThrow(() -> new AccountNotFoundException("account not found"));
 
         //TODO: create transaction record
         CreateTransactionRequest createTransactionRequest = getCreateTransactionRequest(depositRequest);
 
         var transactionResponse = transactionService.create(createTransactionRequest);
+        EmailNotificationRequest request = new EmailNotificationRequest();
+        request.setSubject("DR");
+        request.setRecipient(account.getUsername());
+        request.setMailBody(String.format("Your account %s has been credited with %s on %s",
+                account.getAccountNumber(), depositRequest.getAmount(), LocalDateTime.now()));
+        notificationService.notifyBy(request);
         return buildDepositResponse(transactionResponse);
+
     }
 
     @Override
