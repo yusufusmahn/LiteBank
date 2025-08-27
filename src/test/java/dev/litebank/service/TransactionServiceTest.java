@@ -54,5 +54,4 @@ public class TransactionServiceTest {
         assertThat(transactions.size()).isEqualTo(5);
     }
 
-
 }
