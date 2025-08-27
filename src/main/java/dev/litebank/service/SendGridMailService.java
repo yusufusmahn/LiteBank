@@ -11,20 +11,24 @@ import dev.litebank.dto.requests.EmailNotificationRequest;
 import dev.litebank.dto.responses.EmailNotificationResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 
-@Service
+@Configuration
 @Slf4j
 public class SendGridMailService implements EmailNotificationService{
 
-    @Value("${apiKey}")
+    @Value("${mail.api.key}")
     private String apiKey;
+
+    @Value("${mail.api.email}")
+    private String apiEmail;
 
     @Override
     public EmailNotificationResponse notifyBy(EmailNotificationRequest notificationRequest) throws IOException {
 
-        Email from = new Email("yusuf.usman3001@gmail.com");
+        Email from = new Email(apiEmail);
         Email to = new Email(notificationRequest.getRecipient());
         Content content = new Content("text/plain", notificationRequest.getMailBody());
         Mail mail = new Mail(from, notificationRequest.getSubject(), to, content);
