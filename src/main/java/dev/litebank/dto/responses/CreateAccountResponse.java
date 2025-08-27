@@ -11,4 +11,5 @@ public class CreateAccountResponse {
     private String accountNumber;
     private String accountHolderName;
     private AccountType accountType;
+    private String id;
 }
