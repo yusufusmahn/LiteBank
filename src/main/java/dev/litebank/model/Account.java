@@ -1,10 +1,7 @@
 package dev.litebank.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,5 +16,9 @@ public class Account {
     private String password;
     private String name;
     private String accountNumber;
+
+
+    @Enumerated(EnumType.STRING)
+    private AccountType accountType;
 
 }
