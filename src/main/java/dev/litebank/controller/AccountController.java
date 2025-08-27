@@ -25,7 +25,7 @@ public class AccountController {
     private final AccountService accountService;
 
 
-    @PostMapping
+    @PostMapping("/deposit")
     public ResponseEntity<?> deposit(@RequestBody DepositRequest depositRequest){
         try {
             DepositResponse depositResponse = accountService.deposit(depositRequest);
@@ -49,5 +49,6 @@ public class AccountController {
                     .body(new ErrorResponse<>(e.getMessage()));
         }
     }
+
 
 }
