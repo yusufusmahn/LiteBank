@@ -29,5 +29,4 @@ public class NotificationServiceTest {
         assertThat(response.isStatus()).isTrue();
 
     }
-
 }
