@@ -12,6 +12,7 @@ import dev.litebank.model.Account;
 import dev.litebank.repository.AccountRepository;
 import dev.litebank.exception.AccountNotFoundException;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,7 @@ public class AccountServiceImpl implements AccountService {
     private final TransactionService transactionService;
     private final PasswordEncoder passwordEncoder;
     private final NotificationService notificationService;
+    private final ModelMapper modelMapper;
 
 
     @Override
@@ -45,7 +47,7 @@ public class AccountServiceImpl implements AccountService {
 
         var transactionResponse = transactionService.create(createTransactionRequest);
         EmailNotificationRequest request = new EmailNotificationRequest();
-        request.setSubject("DR");
+        request.setSubject("CR");
         request.setRecipient(account.getUsername());
         request.setMailBody(String.format("Your account %s has been credited with %s on %s",
                 account.getAccountNumber(), depositRequest.getAmount(), LocalDateTime.now()));
@@ -92,14 +94,17 @@ public class AccountServiceImpl implements AccountService {
 
         Account saved = accountRepository.save(account);
 
+        return buildCreateAccountResponse(saved, account);
+    }
+
+    private CreateAccountResponse buildCreateAccountResponse(Account saved, Account account) {
         CreateAccountResponse response = new CreateAccountResponse();
         response.setAccountNumber(saved.getAccountNumber());
         response.setAccountHolderName(toTitleCase(saved.getName()));
         response.setAccountType(saved.getAccountType());
-
+        response.setId(account.getId());
         return response;
     }
-
 
 
     private static TransactionResponse computeAccountBalanceFrom(TransactionResponse a, TransactionResponse b, TransactionResponse transactionResponse) {
