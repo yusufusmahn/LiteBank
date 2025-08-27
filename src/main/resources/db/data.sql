@@ -1,8 +1,8 @@
 truncate table account cascade;
 truncate table transaction cascade;
 
-insert into account (id, account_number) values(
-    '12345', '0123456789');
+insert into account (id, account_number, username) values(
+    '12345', '0123456789', 'becaw65821@chaublog.com');
 
 
 insert into transaction(id, amount, account_number, transaction_type) values
