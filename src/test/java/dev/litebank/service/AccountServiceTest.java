@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -25,7 +26,7 @@ public class  AccountServiceTest {
 
 
     @Test
-    void testCanDeposit(){
+    void testCanDeposit() throws IOException {
         DepositRequest depositRequest = new DepositRequest();
         depositRequest.setPaymentMethod(PaymentMethod.CARD);
         depositRequest.setAccountNumber("0123456789");
