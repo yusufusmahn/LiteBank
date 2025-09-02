@@ -6,10 +6,13 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.util.Collection;
 
 
 @Component
@@ -25,15 +28,17 @@ public class LiteBankAuthenticationProvider implements AuthenticationProvider {
         String password = authentication.getCredentials().toString();
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         String savedPassword = userDetails.getPassword();
+        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+
         boolean isPasswordValidMatch = passwordEncoder.matches(password, savedPassword);
         if (isPasswordValidMatch) {
             return new UsernamePasswordAuthenticationToken(username, null, null);
         }
-        throw new BadCredentialsException("Bad credentials");
+        throw new BadCredentialsException("Invalid auth credentials supplied, please try again later");
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return false;
+        return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 }
