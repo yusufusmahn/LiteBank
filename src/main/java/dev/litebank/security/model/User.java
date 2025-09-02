@@ -14,6 +14,7 @@ import java.util.List;
 public class User implements UserDetails {
 
     private AccountResponse accountResponse;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         //TODO: Remove hardcoded authority
