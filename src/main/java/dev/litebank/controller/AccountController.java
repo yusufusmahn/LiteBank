@@ -44,7 +44,7 @@ public class AccountController {
     @PostMapping("/create")
     public ResponseEntity<?> createAccount(@RequestBody CreateAccountRequest request) {
         try {
-            CreateAccountResponse response = accountService.createAccount(request);
+            CreateAccountResponse response = accountService.create(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
         } catch (UsernameAlreadyTakenException e) {
