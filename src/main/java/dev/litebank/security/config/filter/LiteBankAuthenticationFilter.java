@@ -1,5 +1,7 @@
 package dev.litebank.security.config.filter;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.litebank.security.dto.request.AuthRequest;
 import jakarta.servlet.Filter;
@@ -16,6 +18,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.util.stream.Collectors.toList;
 
 @Component
 @AllArgsConstructor
@@ -26,14 +33,40 @@ public class LiteBankAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        if (!request.getServletPath().equals("/login")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         ObjectMapper  mapper = new ObjectMapper();
         InputStream requestBody = request.getInputStream(); //{"username":"", "password":""} what we have here is json
-        byte[] body = requestBody.readAllBytes();
         AuthRequest authRequest = mapper.readValue(requestBody, AuthRequest.class);
         String username = authRequest.getPassword();
         String password = authRequest.getPassword();
-
         Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
         Authentication authResult = authenticationManager.authenticate(authentication);
+        if (authResult.isAuthenticated()) {
+            String jwt = JWT.create()
+                    .withIssuer("https://litebank.com")
+                    .withIssuedAt(Instant.now())
+                    .withExpiresAt(Instant.now().plusSeconds(60 * 60 * 24))
+                    .withSubject(username)
+                    .withClaim("roles", authResult.getAuthorities()
+                            .stream().map(a->a.getAuthority()).toList())
+                    .sign(Algorithm.HMAC256("secret"));
+            Map<String, String> loginResponse = new HashMap<>();
+            loginResponse.put("access_token", jwt);
+            response.setContentType("application/json");
+            response.getOutputStream().write(mapper.writeValueAsBytes(loginResponse));
+            response.flushBuffer();
+        }else {
+            Map<String, String> loginResponse = new HashMap<>();
+            loginResponse.put("response", "Authentication Failed");
+            response.setContentType("application/json");
+            response.getOutputStream().write(mapper.writeValueAsBytes(loginResponse));
+            response.flushBuffer();
+        }
+        filterChain.doFilter(request, response);
+
+
     }
 }
