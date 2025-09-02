@@ -4,7 +4,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.litebank.security.dto.request.AuthRequest;
-import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +21,6 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
-import static java.util.stream.Collectors.toList;
 
 @Component
 @AllArgsConstructor
@@ -40,7 +38,7 @@ public class LiteBankAuthenticationFilter extends OncePerRequestFilter {
         ObjectMapper  mapper = new ObjectMapper();
         InputStream requestBody = request.getInputStream(); //{"username":"", "password":""} what we have here is json
         AuthRequest authRequest = mapper.readValue(requestBody, AuthRequest.class);
-        String username = authRequest.getPassword();
+        String username = authRequest.getUsername();
         String password = authRequest.getPassword();
         Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
         Authentication authResult = authenticationManager.authenticate(authentication);
