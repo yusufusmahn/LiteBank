@@ -19,5 +19,6 @@ public class LiteBankUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AccountResponse accountResponse = accountService.getByUsername(username);
         return new User(accountResponse);
+
     }
 }
