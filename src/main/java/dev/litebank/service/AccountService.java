@@ -15,7 +15,7 @@ public interface AccountService {
 
     ViewAccountResponse viewDetailsFor(String number);
 
-    CreateAccountResponse createAccount(CreateAccountRequest createAccountRequest);
+    CreateAccountResponse create(CreateAccountRequest createAccountRequest);
 
     AccountResponse getByUsername(String username);
 }
