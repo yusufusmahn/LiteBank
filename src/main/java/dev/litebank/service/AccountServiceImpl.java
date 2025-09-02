@@ -12,17 +12,20 @@ import dev.litebank.model.Account;
 import dev.litebank.repository.AccountRepository;
 import dev.litebank.exception.AccountNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.math.BigDecimal.ZERO;
 
@@ -71,8 +74,10 @@ public class AccountServiceImpl implements AccountService {
         return viewAccountResponse;
     }
 
+
+
     @Override
-    public CreateAccountResponse createAccount(CreateAccountRequest createAccountRequest) {
+    public CreateAccountResponse create(CreateAccountRequest createAccountRequest) {
         if (accountRepository.findByUsername(createAccountRequest.getUsername()).isPresent()) {
             throw new UsernameAlreadyTakenException("Username already taken");
         }
@@ -80,7 +85,6 @@ public class AccountServiceImpl implements AccountService {
         Account account = new Account();
         account.setName(normalizeName(createAccountRequest.getName()));
         account.setUsername(createAccountRequest.getUsername());
-
         account.setPassword(passwordEncoder.encode(createAccountRequest.getPassword()));
 
         account.setAccountType(createAccountRequest.getAccountType());
@@ -100,7 +104,8 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountResponse getByUsername(String username) {
         Account account = accountRepository.findByUsername(username)
-                .orElseThrow(() -> new AccountNotFoundException("account not found"));
+                                            .orElseThrow(() -> new AccountNotFoundException("account not found"));
+
         return modelMapper.map(account, AccountResponse.class);
     }
 
