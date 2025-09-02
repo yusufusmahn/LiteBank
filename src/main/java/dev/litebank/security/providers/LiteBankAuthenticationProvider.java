@@ -32,7 +32,7 @@ public class LiteBankAuthenticationProvider implements AuthenticationProvider {
 
         boolean isPasswordValidMatch = passwordEncoder.matches(password, savedPassword);
         if (isPasswordValidMatch) {
-            return new UsernamePasswordAuthenticationToken(username, null, null);
+            return new UsernamePasswordAuthenticationToken(username, null, authorities);
         }
         throw new BadCredentialsException("Invalid auth credentials supplied, please try again later");
     }
