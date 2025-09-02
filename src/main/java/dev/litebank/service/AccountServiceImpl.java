@@ -97,6 +97,13 @@ public class AccountServiceImpl implements AccountService {
         return buildCreateAccountResponse(saved, account);
     }
 
+    @Override
+    public AccountResponse getByUsername(String username) {
+        Account account = accountRepository.findByUsername(username)
+                .orElseThrow(() -> new AccountNotFoundException("account not found"));
+        return modelMapper.map(account, AccountResponse.class);
+    }
+
     private CreateAccountResponse buildCreateAccountResponse(Account saved, Account account) {
         CreateAccountResponse response = new CreateAccountResponse();
         response.setAccountNumber(saved.getAccountNumber());
