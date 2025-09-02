@@ -20,7 +20,6 @@ public class LiteBankApplication {
 	}
 
 
-
 //        @Bean
 //    public PasswordEncoder passwordEncoder() {
 //        return NoOpPasswordEncoder.getInstance();
