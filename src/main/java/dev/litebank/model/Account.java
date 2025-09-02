@@ -17,7 +17,6 @@ public class Account {
     private String name;
     private String accountNumber;
 
-
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
