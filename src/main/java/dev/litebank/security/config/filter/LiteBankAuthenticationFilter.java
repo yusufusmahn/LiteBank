@@ -9,6 +9,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,11 +26,13 @@ import java.util.Map;
 
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class LiteBankAuthenticationFilter extends OncePerRequestFilter {
 
     private final AuthenticationManager authenticationManager;
     private final ObjectMapper mapper;
+    @Value("${jwt.signing.key}")
+    private String SigningKey;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -52,7 +56,7 @@ public class LiteBankAuthenticationFilter extends OncePerRequestFilter {
                         .withSubject(username)
                         .withClaim("roles", authResult.getAuthorities()
                                 .stream().map(a->a.getAuthority()).toList())
-                        .sign(Algorithm.HMAC256("secret"));
+                        .sign(Algorithm.HMAC256(SigningKey));
                 Map<String, String> loginResponse = new HashMap<>();
                 loginResponse.put("access_token", jwt);
                 response.setContentType("application/json");
