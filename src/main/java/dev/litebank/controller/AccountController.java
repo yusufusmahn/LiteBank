@@ -45,6 +45,8 @@ public class AccountController {
     public ResponseEntity<?> createAccount(@RequestBody CreateAccountRequest request) {
         try {
             CreateAccountResponse response = accountService.create(request);
+            System.out.println(">>> Returning to client: " + response);
+
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
         } catch (UsernameAlreadyTakenException e) {
