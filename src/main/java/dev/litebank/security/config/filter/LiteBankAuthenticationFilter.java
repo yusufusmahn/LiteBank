@@ -27,12 +27,11 @@ import java.util.Map;
 @AllArgsConstructor
 public class LiteBankAuthenticationFilter extends OncePerRequestFilter {
 
-
     private final AuthenticationManager authenticationManager;
+    private final ObjectMapper mapper;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        ObjectMapper  mapper = new ObjectMapper();
 
         try{
             if (!request.getServletPath().equals("/login")) {
