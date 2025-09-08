@@ -78,9 +78,10 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public CreateAccountResponse create(CreateAccountRequest createAccountRequest) {
-        if (accountRepository.findByUsername(createAccountRequest.getUsername()).isPresent()) {
-            throw new UsernameAlreadyTakenException("Username already taken");
-        }
+
+//        if (accountRepository.findByUsername(createAccountRequest.getUsername()).isPresent()) {
+//            throw new UsernameAlreadyTakenException("Username already taken");
+//        }
 
         Account account = new Account();
         account.setName(normalizeName(createAccountRequest.getName()));
@@ -99,6 +100,7 @@ public class AccountServiceImpl implements AccountService {
         Account saved = accountRepository.save(account);
 
         return buildCreateAccountResponse(saved, account);
+
     }
 
     @Override
