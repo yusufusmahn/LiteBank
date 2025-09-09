@@ -1,11 +1,11 @@
 package dev.litebank.security.service;
 
+import com.auth0.jwt.interfaces.Claim;
 import org.springframework.security.core.Authentication;
 
-import java.util.List;
-
 public interface JwtService {
-    String generateJwt(Authentication authentication);
-
+    String generateAccessToken(Authentication authentication);
+    String generateRefreshToken(Authentication authentication);
     boolean isJwtTokenValid(String token);
+    Claim extractClaim(String token, String claimName);
 }
