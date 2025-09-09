@@ -9,7 +9,9 @@ import dev.litebank.dto.responses.ErrorResponse;
 import dev.litebank.exception.AccountNotFoundException;
 import dev.litebank.exception.UsernameAlreadyTakenException;
 import dev.litebank.service.AccountService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +30,7 @@ public class AccountController {
 
 
     @PostMapping("/deposit")
-    public ResponseEntity<?> deposit(@RequestBody DepositRequest depositRequest){
+    public ResponseEntity<?> deposit(@RequestBody @Valid DepositRequest depositRequest){
         try {
             DepositResponse depositResponse = accountService.deposit(depositRequest);
             return ResponseEntity.status(HttpStatus.CREATED).body(depositResponse);
