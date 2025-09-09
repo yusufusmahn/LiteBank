@@ -7,10 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ErrorResponse <T> {
-    private T response;
+    private T error;
 
-    public ErrorResponse(T response) {
-        this.response = response;
+    public ErrorResponse(T error) {
+        this.error = error;
 
     }
 }
