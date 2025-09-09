@@ -26,11 +26,7 @@ public class LiteBankApplication {
 //
 //    }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
 
-    }
 
 
 }
