@@ -45,7 +45,7 @@ public class SecurityConfig {
                 .addFilterBefore(authorizationFilter, LiteBankAuthenticationFilter.class)
                 .authorizeHttpRequests(c->c.requestMatchers(PUBLIC_ENDPOINTS).permitAll())
                 .authorizeHttpRequests(c->
-                        c.requestMatchers("/api/v1/transaction/**")
+                        c.requestMatchers("/api/v1/transaction/**", "/api/v1/account", "/api/v1/account/**")
                                 .hasAnyAuthority(ACCOUNT.name(), ADMIN.name()))
                 .build();
     }
